@@ -10,7 +10,8 @@ import io.cucumber.testng.PickleWrapper;
 
 @CucumberOptions(
         features = "src/test/resources/features/api",
-        glue = "com.main.api.step"
+        glue = "com.main.api.step",
+        plugin = {"pretty", "json:src/test/java/com/reports/api/cucumber.json", "html:src/test/java/com/reports/api/cucumber-api.html"}
 )
 public class TestRunnerApi extends AbstractTestNGCucumberTests {
 
@@ -21,8 +22,19 @@ public class TestRunnerApi extends AbstractTestNGCucumberTests {
     }
 
     @Override
-    @Test(groups = "cucumber", description = "Runs Cucumber Scenarios API", dataProvider = "scenarios")
+    @Test(groups = "cucumber", description = "Runs Cucumber Scenarios API", dataProvider = "scenarios", suiteName = "API")
     public void runScenario(PickleWrapper pickleWrapper, FeatureWrapper featureWrapper) {
         super.runScenario(pickleWrapper, featureWrapper);
+    }
+
+    @Override
+    @org.testng.annotations.AfterClass(alwaysRun = true)
+    public void tearDownClass() {
+        super.tearDownClass();
+        java.io.File report = new java.io.File("src/test/java/com/reports/api/cucumber-api.html");
+        if (report.exists()) {
+            String timestamp = new java.text.SimpleDateFormat("dd-MM-yyyy_HH_mm_ss").format(new java.util.Date());
+            report.renameTo(new java.io.File("src/test/java/com/reports/api/TestRunnerApi_" + timestamp + ".html"));
+        }
     }
 }

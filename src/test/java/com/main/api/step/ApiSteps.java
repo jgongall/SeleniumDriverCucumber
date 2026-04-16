@@ -5,11 +5,9 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
-import org.openqa.selenium.WebDriver;
-
 
 public class ApiSteps {
-    private WebDriver driver;
+
 
     @Given("llamar a la api {string}")
     public void llamar_a_la_api(String url) {
@@ -21,15 +19,13 @@ public class ApiSteps {
         
     }   
 
-    @Then("el código de respuesta debe ser {string}")
+    @Then("el codigo de respuesta debe ser {string}")
     public void el_codigo_de_respuesta_debe_ser(String codigo) {
         
     }   
 
     @After
     public void cerrarNavegador() {
-        if (driver != null) {
-            driver.quit();
-        }
+     
     }
 }

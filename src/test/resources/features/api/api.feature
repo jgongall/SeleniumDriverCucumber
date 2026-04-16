@@ -1,7 +1,10 @@
 #Feature example api
-Feature: realizar peticion a una api
+Feature: realizar peticion a una REST API a Pokeapi
 
-  Scenario: generar una peticion a la api
-    Given llamar a la api "https://jsonplaceholder.typicode.com/posts"
+  Background:
+    Given llamar a la api "https://pokeapi.co/api/v2/pokemon/"
+
+  @API
+  Scenario: generar una peticion GET la REST API
     When generar una peticion GET
-    Then el código de respuesta debe ser "200"
+    Then el codigo de respuesta debe ser "200"
